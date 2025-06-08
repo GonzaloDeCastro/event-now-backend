@@ -1,104 +1,89 @@
-# event-now-backend
-
 # 🧠 Event Now - Backend
 
-Este es el backend de **Event Now**, una plataforma que conecta a usuarios con eventos culturales, académicos, recreativos y más. Este servicio está construido con Node.js, Express y MySQL, utilizando autenticación JWT y arquitectura modular.
+**Event Now Backend** es la API RESTful que da soporte al sistema de gestión de eventos culturales, académicos y recreativos de la plataforma Event Now. Está desarrollada en Node.js con Express y utiliza MySQL como base de datos relacional, aplicando buenas prácticas de arquitectura y seguridad.
 
 ---
 
-## 🚀 Tecnologías utilizadas
+## 🚀 Funcionalidades implementadas
 
-- **Node.js**
-- **Express**
-- **MySQL**
-- **JWT** para autenticación
-- **bcryptjs** para encriptación de contraseñas
-- **morgan** para logs de requests
-- **dotenv** para configuración
-- **nodemon** en desarrollo
+- 🧾 Registro de usuarios asistentes con:
+  - Validación de campos requeridos
+  - Hasheo seguro de contraseñas (bcryptjs)
+  - Almacenamiento normalizado en tablas `users` y `assistants`
+- 🔐 Arquitectura preparada para JWT e inicio de sesión
+- 🧠 Estructura escalable y modular
+- 🗃️ Conexión a base de datos MySQL con `mysql2` y variables de entorno
+- 📄 Documentación clara y estilo profesional en el código fuente
+
+---
+
+## ⚙️ Tecnologías utilizadas
+
+| Core               | Seguridad                   | Utilidades   | Dev Tools       |
+| ------------------ | --------------------------- | ------------ | --------------- |
+| Node.js + Express  | bcryptjs, JWT (planificado) | dotenv, cors | nodemon, morgan |
+| MySQL (con mysql2) |                             |              |                 |
 
 ---
 
 ## 📁 Estructura del proyecto
 
-src/
-├── config/ # Configuración de conexión a la base de datos
-├── controllers/ # Lógica de cada endpoint
-├── models/ # Consultas SQL y acceso a la base
-├── routes/ # Rutas organizadas por recurso
-├── services/ # Lógica de negocio (opcional)
-├── middlewares/ # Validaciones, autenticación, manejo de errores
-├── utils/ # Funciones auxiliares
-├── app.js # Inicialización de la app Express
-server.js # Punto de entrada del servidor
-.env # Variables de entorno (no subir a Git)
-
-yaml
-Copy
-Edit
+```bash
+event-now-backend/
+├── src/
+│   ├── config/         # Conexión a base de datos y variables de entorno
+│   ├── controllers/    # Lógica de los endpoints
+│   ├── models/         # Consultas y acceso a base de datos
+│   ├── routes/         # Definición de rutas (express.Router)
+│   ├── middlewares/    # (en desarrollo) Autenticación, validaciones
+│   ├── services/       # (opcional) Lógica desacoplada
+│   ├── utils/          # Funciones auxiliares
+│   ├── app.js          # Configuración principal de Express
+├── server.js           # Punto de entrada del servidor
+├── .env                # Configuración de entorno (no subir a Git)
+```
 
 ---
 
-## ⚙️ Instalación
+## 🧪 Estado actual
 
-1. Clonar el repositorio:
+✅ Implementado:
+
+- Registro completo de usuarios asistentes (`/api/users/register`)
+- Conexión segura a MySQL con variables de entorno
+- Validación de datos en backend
+- Hasheo de contraseñas
+- Control de duplicados por email/username
+- Documentación y estructura modular
+
+🔜 En desarrollo:
+
+- Registro de organizadores con datos legales
+- Login con JWT
+- Tabla de sesiones (`user_sessions`) para trazabilidad de accesos
+- Middleware de autenticación
+- Roles y permisos (admin, organizer, assistant)
+
+---
+
+## 📦 Instalación local
 
 ```bash
-git clone https://github.com/tu-usuario/event-now-backend.git
+git clone https://github.com/tuusuario/event-now-backend.git
 cd event-now-backend
-Instalar dependencias:
-
-bash
-Copy
-Edit
 npm install
-Crear archivo .env con la configuración de tu base de datos:
 
-env
-Copy
-Edit
+Crear el archivo .env en la raíz con los siguientes datos:
 DB_HOST=localhost
 DB_PORT=3306
 DB_USER=root
 DB_PASSWORD=root
 DB_NAME=event_now
 PORT=3001
-Iniciar el servidor en modo desarrollo:
+```
 
-bash
-Copy
-Edit
-npm run dev
-📌 Endpoints disponibles (hasta el momento)
-Método	Ruta	Descripción
-POST	/api/users/register	Registro de usuarios asistentes
-POST	/api/users/login	(en desarrollo) Login de usuario
-GET	/api/users/ping	Test básico del módulo de usuarios
+## 🧠 Autor
 
-📌 Por hacer (To Do)
- Registro de usuarios asistentes
-
- Registro de organizadores
-
- Login con JWT
-
- Middleware de autenticación
-
- Control de sesiones en tabla user_sessions
-
- Administración de usuarios (admin)
-
- Tests unitarios
-
-🧠 Autor
 Desarrollado por Gonzalo De Castro como parte de su proyecto final de Ingeniería en Sistemas.
 
-🛡️ Licencia
-Este proyecto es de código cerrado y no se encuentra publicado con fines comerciales. Contactar al autor para uso o colaboración.
-
-
-
 ---
-
-¿Querés que lo guarde directo en un archivo `.md` desde acá o te lo dejo listo para copiar y pegar en tu repo local?
-```
