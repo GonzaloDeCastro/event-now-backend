@@ -54,3 +54,16 @@ exports.insertAssistantData = async (userId, age, preferences) => {
   );
   return result;
 };
+
+/**
+ * Finds a user by their ID
+ * @param {number} userId - ID of the user
+ * @returns {Promise<Object|null>} User object or null if not found
+ */
+exports.findUserById = async (userId) => {
+  const [rows] = await db.query(
+    `SELECT id, username, email, user_type_id FROM users WHERE id = ?`,
+    [userId]
+  );
+  return rows[0] || null;
+};

@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const userModel = require("../models/user.model");
+const jwt = require("jsonwebtoken");
 
 /**
  * Controller for registering a new user (assistant or organizer).
@@ -70,8 +71,23 @@ exports.registerUser = async (req, res) => {
       await userModel.insertAssistantData(userId, age, preferences);
     }
 
+    // Generate JWT token
+    const token = jwt.sign(
+      { userId: userId, userType: userTypeId },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
     // Return success response
-    res.status(201).json({ message: "User registered successfully." });
+    res.status(201).json({
+      message: "User registered successfully.",
+      token,
+      user: {
+        id: userId,
+        username,
+        email,
+        userType: userTypeId,
+      },
+    });
   } catch (error) {
     console.error("Error in registerUser:", error.message);
     res.status(500).json({ error: "Internal server error." });
