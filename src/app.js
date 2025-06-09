@@ -13,7 +13,10 @@ app.use(morgan("dev"));
 
 // Rutas
 const userRoutes = require("./routes/user.routes");
+const eventRoutes = require("./routes/event.routes");
+
 app.use("/api/users", userRoutes);
+app.use("/api/events", eventRoutes);
 
 // Default
 app.get("/", (req, res) => {
