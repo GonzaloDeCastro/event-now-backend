@@ -23,6 +23,11 @@ exports.registerUser = async (req, res) => {
       userType, // Expected values: 'assistant' or 'organizer'
       age, // Required if userType === 'assistant'
       preferences, // Optional array of preferences
+      legal_name,
+      tax_id,
+      phone,
+      legal_address,
+      website,
     } = req.body;
 
     // Basic validation
@@ -69,6 +74,16 @@ exports.registerUser = async (req, res) => {
       }
 
       await userModel.insertAssistantData(userId, age, preferences);
+    }
+    if (userType === "organizer") {
+      await userModel.insertOrganizerData(
+        userId,
+        legal_name,
+        tax_id,
+        phone,
+        legal_address,
+        website
+      );
     }
 
     // Generate JWT token

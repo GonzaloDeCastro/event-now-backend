@@ -56,6 +56,32 @@ exports.insertAssistantData = async (userId, age, preferences) => {
 };
 
 /**
+ * Inserts organizer-specific data into the 'organizers' table.
+ *
+ * @param {number} userId - The ID of the user (foreign key).
+ * @param {string} legal_name - Name of the organization.
+ * @param {string} tax_id - CUIT (Argentine tax ID).
+ * @param {string} phone - Organizer's contact number.
+ * @param {string} legal_address - Organizer's address.
+ * @returns {Promise<object>} The result of the insert query.
+ */
+exports.insertOrganizerData = async (
+  userId,
+  legal_name,
+  tax_id,
+  phone,
+  legal_address,
+  website
+) => {
+  const [result] = await db.query(
+    `INSERT INTO organizers (user_id, legal_name, tax_id, phone, legal_address,website)
+     VALUES (?, ?, ?, ?, ?,?)`,
+    [userId, legal_name, tax_id, phone, legal_address, website]
+  );
+  return result;
+};
+
+/**
  * Finds a user by their ID
  * @param {number} userId - ID of the user
  * @returns {Promise<Object|null>} User object or null if not found
