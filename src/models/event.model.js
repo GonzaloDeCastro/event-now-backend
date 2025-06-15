@@ -84,8 +84,14 @@ const getAllPublicEvents = async () => {
   );
 };
 
+// Gets a single event by ID
+const getEventById = async (eventId) => {
+  return await db.query("SELECT * FROM events WHERE id = ?", [eventId]);
+};
+
 module.exports = {
   insertEvent,
   getEventsByOrganizer,
   getAllPublicEvents,
+  getEventById,
 };
