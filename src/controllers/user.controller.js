@@ -20,8 +20,8 @@ exports.registerUser = async (req, res) => {
       email,
       password,
       confirmPassword,
-      userType, // Expected values: 'assistant' or 'organizer'
-      age, // Required if userType === 'assistant'
+      role, // Expected values: 'assistant' or 'organizer'
+      age, // Required if role === 'assistant'
       preferences, // Optional array of preferences
       legal_name,
       tax_id,
@@ -31,7 +31,7 @@ exports.registerUser = async (req, res) => {
     } = req.body;
 
     // Basic validation
-    if (!fullName || !username || !email || !password || !userType) {
+    if (!fullName || !username || !email || !password || !role) {
       return res.status(400).json({ error: "Missing required fields." });
     }
 
@@ -54,7 +54,7 @@ exports.registerUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // Determine user type ID (1 = assistant, 2 = organizer)
-    const userTypeId = userType === "assistant" ? 1 : 2;
+    const userTypeId = role === "assistant" ? 1 : 2;
 
     // Insert into the 'users' table and get the new user ID
     const userId = await userModel.insertUser({
@@ -66,7 +66,7 @@ exports.registerUser = async (req, res) => {
     });
 
     // If the user is an assistant, insert extra info into 'assistants' table
-    if (userType === "assistant") {
+    if (role === "assistant") {
       if (!age) {
         return res
           .status(400)
@@ -75,7 +75,7 @@ exports.registerUser = async (req, res) => {
 
       await userModel.insertAssistantData(userId, age, preferences);
     }
-    if (userType === "organizer") {
+    if (role === "organizer") {
       await userModel.insertOrganizerData(
         userId,
         legal_name,
@@ -88,7 +88,7 @@ exports.registerUser = async (req, res) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { userId: userId, userType: userTypeId },
+      { userId: userId, role: userTypeId },
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
@@ -100,7 +100,7 @@ exports.registerUser = async (req, res) => {
         id: userId,
         username,
         email,
-        userType: userTypeId,
+        role: userTypeId,
       },
     });
   } catch (error) {

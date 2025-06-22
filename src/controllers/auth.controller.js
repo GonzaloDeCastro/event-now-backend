@@ -40,7 +40,7 @@ exports.loginUser = async (req, res) => {
 
     // Generate JWT token
     const token = jwt.sign(
-      { userId: user.id, userType: user.user_type_id },
+      { userId: user.id, role: user.role_id },
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
@@ -53,7 +53,7 @@ exports.loginUser = async (req, res) => {
         id: user.id,
         username: user.username,
         email: user.email,
-        userType: user.user_type_id,
+        role: user.role_id,
       },
     });
   } catch (error) {
@@ -84,7 +84,7 @@ exports.getCurrentUser = async (req, res) => {
       id: user.id,
       username: user.username,
       email: user.email,
-      userType: user.user_type_id,
+      role: user.role_id,
     });
   } catch (error) {
     res.status(401).json({ error: "Unauthorized" });

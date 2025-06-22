@@ -13,12 +13,12 @@ exports.createEvent = async (req, res) => {
 
     // Validación de rol - destructuring para obtener solo el array de resultados
     const [userRows] = await db.query(
-      "SELECT user_type_id FROM users WHERE id = ?",
+      "SELECT role_id FROM users WHERE id = ?",
       [userId]
     );
 
     // Si no existe el usuario o no es organizador
-    if (!userRows[0] || userRows[0].user_type_id !== 2) {
+    if (!userRows[0] || userRows[0].role_id !== 2) {
       return res
         .status(403)
         .json({ message: "Only organizers can create events" });
@@ -46,7 +46,7 @@ exports.getMyEventsByOrganizer = async (req, res) => {
   try {
     const userId = req.user.id;
 
-    if (req.user.userType !== 2) {
+    if (req.user.role !== 2) {
       return res.status(403).json({ message: "Organizer access only." });
     }
 

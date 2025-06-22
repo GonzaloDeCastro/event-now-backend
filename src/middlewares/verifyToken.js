@@ -26,7 +26,7 @@ const verifyToken = (req, res, next) => {
     // Attach user info to the request
     req.user = {
       id: decoded.userId,
-      userType: decoded.userType, // 1 = assistant, 2 = organizer
+      role: decoded.role, // 1 = assistant, 2 = organizer
     };
 
     next();

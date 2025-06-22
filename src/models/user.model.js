@@ -31,7 +31,7 @@ exports.insertUser = async (userData) => {
   const { fullName, username, email, hashedPassword, userTypeId } = userData;
 
   const [result] = await db.query(
-    `INSERT INTO users (full_name, username, email, password, user_type_id) 
+    `INSERT INTO users (full_name, username, email, password, role_id) 
      VALUES (?, ?, ?, ?, ?)`,
     [fullName, username, email, hashedPassword, userTypeId]
   );
@@ -88,7 +88,7 @@ exports.insertOrganizerData = async (
  */
 exports.findUserById = async (userId) => {
   const [rows] = await db.query(
-    `SELECT id, username, email, user_type_id FROM users WHERE id = ?`,
+    `SELECT id, username, email, role_id FROM users WHERE id = ?`,
     [userId]
   );
   return rows[0] || null;
