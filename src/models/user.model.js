@@ -82,7 +82,7 @@ exports.insertOrganizerData = async (
 };
 
 /**
- * Finds a user by their ID
+ * Finds a user by their I D
  * @param {number} userId - ID of the user
  * @returns {Promise<Object|null>} User object or null if not found
  */
