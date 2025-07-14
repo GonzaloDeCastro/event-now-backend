@@ -12,7 +12,7 @@ const verifyToken = require("../middlewares/verifyToken");
 router.post("/", verifyToken, createEvent); // solo logueados
 router.get("/by-organizer", verifyToken, getMyEventsByOrganizer);
 router.get("/", getAllEvents); // acceso público
-router.get("/by-id/:id", verifyToken, getEventById);
+router.get("/by-id/:id", getEventById);
 
 //router.put("/:id", verifyToken, updateEvent);
 //router.delete("/:id", verifyToken, deleteEvent);
